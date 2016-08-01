@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <canvas id="canvas" width="400" height="400" style="border:1px solid #000000;">
+
+        </canvas> 
+        <script>
+            var canvas=document.getElementById("canvas");
+            var ctx=canvas.getContext("2d");
+            var cw=canvas.width;
+            var ch=canvas.height;
+            function reOffset(){
+            var BB=canvas.getBoundingClientRect();
+            offsetX=BB.left;
+            offsetY=BB.top;        
+            }
+            var offsetX,offsetY;
+            reOffset();
+            window.onscroll=function(e){ reOffset(); }
+            window.onresize=function(e){ reOffset(); }
+
+            var isDown=false;
+            var startX,startY;
+
+            ctx.shadowBlur=5;
+            ctx.fillStyle='skyblue';
+
+            var images=[{x:25,y:25,isHovering:false},{x:100,y:25,isHovering:false},{x:175,y:25,isHovering:false}];
+            draw();
+            document.getElementById("canvas").addEventListener("mousemove", function(e){
+                handleMouseMove(e);
+            });
+
+            function draw(){
+                ctx.clearRect(0,0,cw,ch);
+                for(var i=0;i<images.length;i++){
+                    var img=images[i];
+                    ctx.shadowColor=img.isHovering?'rgba(0,0,0,1)':'rgba(0,0,0,0)';
+                    ctx.fillRect(img.x,img.y,35,25);
+                }
+            }
+
+
+            function handleMouseMove(e){
+                // tell the browser we're handling this event
+                e.preventDefault();
+                e.stopPropagation();
+
+                mx=parseInt(e.clientX-offsetX);
+                my=parseInt(e.clientY-offsetY);
+
+                for(var i=0;i<images.length;i++){
+                    var img=images[i];
+                    var x=img.x;
+                    var y=img.y;
+                    img.isHovering=(mx>x && mx<x+35 && my>y && my<y+25);
+                }
+                draw();
+
+            }
+
+            
+            // var c = document.getElementById("myCanvas");
+            // var ctx = c.getContext("2d");
+            // ctx.fillStyle = "#FF0000";
+            // ctx.fillRect(0,0,150,75);
+        </script>
+    </body>
+</html>
