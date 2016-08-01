@@ -2,11 +2,27 @@
 <html>
     <head>
     </head>
-    <body>
-        <canvas id="canvas" width="400" height="400" style="border:1px solid #000000;">
+    <body onload="init()">
+        <canvas id="canvas1" width="600" height="600" style="border:1px solid #000000;">
 
         </canvas> 
-        <script>
+
+        <!--Move and click indication-->
+        <script src="vb2.js">
+            </script>  
+            <script>
+                        function init() {
+  var s = new CanvasState(document.getElementById('canvas1'));
+  s.addShape(new Shape(40,40,50,50)); // The default is gray
+  s.addShape(new Shape(60,140,40,60, 'lightskyblue'));
+  // Lets make some partially transparent
+  s.addShape(new Shape(80,150,60,30, 'rgba(127, 255, 212, .5)'));
+  s.addShape(new Shape(125,80,30,80, 'rgba(245, 222, 179, .7)'));
+};
+            </script>
+
+        <!--Example of highlighting on mouse over                  -->
+        <!--<script>
             var canvas=document.getElementById("canvas");
             var ctx=canvas.getContext("2d");
             var cw=canvas.width;
@@ -42,6 +58,7 @@
                 }
             }
 
+            
 
             function handleMouseMove(e){
                 // tell the browser we're handling this event
@@ -66,6 +83,6 @@
             // var ctx = c.getContext("2d");
             // ctx.fillStyle = "#FF0000";
             // ctx.fillRect(0,0,150,75);
-        </script>
+        </script>-->
     </body>
 </html>
